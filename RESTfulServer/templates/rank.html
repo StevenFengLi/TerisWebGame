@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<style>
+    li{
+        display: inline-block;
+            /* background-color: black; */
+    border-radius: 2px;
+
+    /* border-color: #8B960E; */
+    border-width: 23px;
+    border: 2px solid #8B960E;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 0px;
+        width: 107px;
+    height: 36px;
+    text-align: center;
+
+    }
+    ul{
+         padding-left: 0px;
+    position: absolute;
+    left: 40%;
+    }
+    h{
+    position: absolute;
+    left: 46%;
+    font-size: 31px;
+    }
+    .top{
+    background-color: #808080;
+    }
+</style>    
+</head>
+
+<body>
+<title>{{RankName}}</title>
+    <h>{{RankName}}</h>
+    <br>
+    <div style="float:left">
+        <form action="/TerisGame/RESTfulServer/GetLocalScoresSelf" method="get">
+              <input id ="watch"type="submit" value="本地排行榜">
+        </form>
+    </div>
+
+    <div style="float:right">
+        <form action="/TerisGame/RESTfulServer/GetAllScores_" method="get">
+              <input id ="watch"type="submit" value="双平台排行榜">
+        </form>
+    </div>
+    <br>
+
+<ul>
+    <li class="top">排名</li><li class="top">姓名</li><li class="top">分数</li><br>
+
+<script>
+     var count=1;
+     var curr =null;
+     var Num=1;
+    var myGeocode = {{ msg|tojson }};
+    for(var obj in myGeocode){
+    if(curr==null)
+      curr = myGeocode[obj].user_score;
+    if(curr!=myGeocode[obj].user_score)
+    {
+      document.write("<li>"+Num+"</li>");
+      count=Num;
+     }
+      else{
+          document.write("<li>"+count+"</li>");
+          }
+          document.write("<li>"+myGeocode[obj].user_name+"</li>");
+          document.write("<li>"+myGeocode[obj].user_score+"</li>");
+          document.write("<br>");
+          curr=myGeocode[obj].user_score;
+          Num++;
+          console.log(count)
+    }
+</script>
+
+</ul>
+</body>
+</html>
